@@ -1,84 +1,74 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Flight;
+use App\Http\Resources\FlightResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class FlightController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $flights = Flight::all();
+        return FlightResource::collection($flights);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $flight = Flight::findOrFail($id);
+        return new FlightResource($flight);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'flight_number' => 'required|string|max:255|unique:flights',
+            'departure_city' => 'required|string|max:255',
+            'arrival_city' => 'required|string|max:255',
+            'departure_time' => 'required|date',
+            'arrival_time' => 'required|date|after:departure_time',
+            'price' => 'required|numeric',
+            'total_seats' => 'required|integer',
+            'reserved_seats' => 'required|integer|gte:0|lte:total_seats',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $flight = Flight::create($validator->validated());
+        return new FlightResource($flight);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $flight = Flight::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'flight_number' => 'sometimes|required|string|max:255|unique:flights,flight_number,' . $flight->id,
+            'departure_city' => 'sometimes|required|string|max:255',
+            'arrival_city' => 'sometimes|required|string|max:255',
+            'departure_time' => 'sometimes|required|date',
+            'arrival_time' => 'sometimes|required|date|after:departure_time',
+            'price' => 'sometimes|required|numeric',
+            'total_seats' => 'sometimes|required|integer',
+            'reserved_seats' => 'sometimes|required|integer|gte:0|lte:total_seats',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $flight->update($validator->validated());
+        return new FlightResource($flight);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $flight = Flight::findOrFail($id);
+        $flight->delete();
+
+        return response()->json(['message' => 'Flight deleted successfully']);
     }
 }
