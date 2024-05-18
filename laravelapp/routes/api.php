@@ -15,11 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+
+
+//RUTE ZA BILO KOG ULOGOVANOG (I ADMIN I KORISNIK)
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('user', [AuthController::class, 'user'])->middleware('auth:sanctum');
+
+// Rute za admina
+Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+    
+});
+
+// Rute za korisnika
+Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
+    
+});
