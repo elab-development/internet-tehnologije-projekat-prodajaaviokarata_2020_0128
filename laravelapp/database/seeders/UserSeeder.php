@@ -15,6 +15,13 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(50)->create(); // Kreiramo 50 korisnika
+        User::factory()->count(5)->create([
+            'role' => 'admin'
+        ]);
+
+        // Kreiramo 45 korisnika sa ulogom user
+        User::factory()->count(45)->create([
+            'role' => 'user'
+        ]);
     }
 }

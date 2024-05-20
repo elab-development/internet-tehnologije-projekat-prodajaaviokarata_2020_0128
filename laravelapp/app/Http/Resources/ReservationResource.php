@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Flight;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ReservationResource extends JsonResource
@@ -17,7 +18,7 @@ class ReservationResource extends JsonResource
         return [
             'id' => $this->id,
             'user' => new UserResource($this->whenLoaded('user')),
-            'flight' => new FlightResource($this->whenLoaded('flight')),
+            'flight' => new FlightResource(Flight::find($this->flight_id)),
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
