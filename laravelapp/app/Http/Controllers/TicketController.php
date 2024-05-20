@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Ticket;
 use App\Http\Resources\TicketResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
+use PDF; 
 class TicketController extends Controller
 {
     public function index()
     {
-        $tickets = Ticket::all();
+       // Dohvati karte koje pripadaju ulogovanom korisniku
+       $tickets = Ticket::whereHas('reservation', function($query) {
+            $query->where('user_id', Auth::id());
+        })->get();
+
         return TicketResource::collection($tickets);
     }
 
@@ -63,6 +68,22 @@ class TicketController extends Controller
         $ticket->delete();
 
         return response()->json(['message' => 'Ticket deleted successfully']);
+    }
+    public function downloadPdf($id)
+    {
+        // Pronađi kartu sa svim potrebnim relacijama
+        $ticket = Ticket::with('reservation.user', 'flight')->findOrFail($id);
+
+        // Proveri da li je ulogovani korisnik isti kao korisnik povezan sa rezervacijom
+        if (Auth::id() !== $ticket->reservation->user_id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        // Generiši PDF
+        $pdf = PDF::loadView('tickets.pdf', compact('ticket'));
+
+        // Vrati preuzimanje PDF-a
+        return $pdf->download('ticket.pdf');
     }
 }
 
