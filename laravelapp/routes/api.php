@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FlightController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +24,7 @@ Route::apiResource('flights', FlightController::class);
 //RUTE ZA BILO KOG ULOGOVANOG (I ADMIN I KORISNIK)
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('user', [AuthController::class, 'user'])->middleware('auth:sanctum');
-
+Route::apiResource('reservations', ReservationController::class)->middleware('auth:sanctum');
 // Rute za admina
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     
