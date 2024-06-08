@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import LandingPage from './NeulogovaniKorisnik/PocetnaStranica/LandingPage';
 import Login from './NeulogovaniKorisnik/Login/Login';
+import Register from './NeulogovaniKorisnik/Register/Register';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -15,7 +16,9 @@ function App() {
 
   return (
     <div className="App">
-      {user ? <LandingPage user={user} /> : <Login setUser={setUser} />}
+      <Register></Register>
+      <LandingPage user={user} />   
+      <Login setUser={setUser}/> 
     </div>
   );
 }
