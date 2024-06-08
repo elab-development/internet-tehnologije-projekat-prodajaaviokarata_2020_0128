@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import LandingPage from './NeulogovaniKorisnik/PocetnaStranica/LandingPage';
 import Login from './NeulogovaniKorisnik/Login/Login';
@@ -15,11 +16,15 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <Register></Register>
-      <LandingPage user={user} />   
-      <Login setUser={setUser}/> 
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<LandingPage user={user} />} />
+          <Route path="/login" element={<Login setUser={setUser} />} />
+          <Route path="/register" element={<Register setUser={setUser} />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
