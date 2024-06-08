@@ -8,17 +8,7 @@ import { FaPlane, FaChartLine, FaGlobe, FaEnvelope, FaPhone, FaCalendarAlt, FaUs
 
 const LandingPage = () => {
   return (
-    <div className="App">
-      <header className="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-        <div className="container"> 
-              <nav className="main-nav">
-                <a href="index.html" className="logo">
-                  <h4>Flight<span>Deals</span></h4>
-                </a> 
-              </nav> 
-        </div>
-      </header>
-
+    <div className="App"> 
       <div className="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
         <div className="container">
           <div className="row">
