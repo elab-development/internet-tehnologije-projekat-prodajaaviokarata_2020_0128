@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState('genoveva57@example.com');
   const [password, setPassword] = useState('password');
-
+  let navigate= useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -17,6 +18,7 @@ const Login = ({ setUser }) => {
       sessionStorage.setItem('token', access_token);
       sessionStorage.setItem('user', JSON.stringify(user));
       setUser(user);
+      navigate('/letovi')
       console.log('Login successful:', response.data);
     } catch (error) {
       console.error('There was an error logging in:', error);

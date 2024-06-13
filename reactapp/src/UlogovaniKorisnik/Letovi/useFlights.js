@@ -20,7 +20,7 @@ const useFlights = () => {
         }
 
         const data = await response.json();
-        setFlights(data);
+        setFlights(data.data);
       } catch (error) {
         console.error('Failed to fetch flights:', error);
       }
