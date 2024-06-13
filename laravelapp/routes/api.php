@@ -31,7 +31,7 @@ Route::get('user', [AuthController::class, 'user'])->middleware('auth:sanctum');
 
 // Rute za admina
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
-    Route::apiResource('flights', FlightController::class)->except('get');
+    Route::apiResource('flights', FlightController::class)->except('index');
     Route::apiResource('seats', SeatController::class);
 
 });
