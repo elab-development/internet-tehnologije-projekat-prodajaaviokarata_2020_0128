@@ -20,7 +20,7 @@ const useTickets = () => {
         }
 
         const data = await response.json();
-        setTickets(data);
+        setTickets(data.data);
       } catch (error) {
         console.error('Failed to fetch tickets:', error);
       }

@@ -25,9 +25,17 @@ const Navbar = ({ user, setUser }) => {
       <Link to="/" style={{color:"white"}} className="navbar-logo">BestFlights</Link>
       <ul className="navbar-links">
         {user ? (
-          <li className="navbar-item">
-            <button className="navbar-button" onClick={handleLogout}>Logout</button>
-          </li>
+           <>
+            <li className="navbar-item">
+              <a className="navbar-link" href="/letovi">Letovi</a>
+            </li>
+            <li className="navbar-item">
+              <a className="navbar-link" href="/mojeKarte">Moje karte</a>
+            </li>
+              <li className="navbar-item">
+                <button className="navbar-button" onClick={handleLogout}>Logout</button>
+              </li>
+          </>
         ) : (
           <>
             <li className="navbar-item">

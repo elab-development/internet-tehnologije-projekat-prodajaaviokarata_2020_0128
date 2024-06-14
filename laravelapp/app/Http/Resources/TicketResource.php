@@ -16,8 +16,8 @@ class TicketResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'reservation' => new ReservationResource($this->whenLoaded('reservation')),
-            'flight' => new FlightResource($this->whenLoaded('flight')),
+            'reservation' => new ReservationResource($this->reservation),
+            'flight' => new FlightResource($this->flight),
             'seat_number' => $this->seat_number,
             'price' => $this->price,
             'created_at' => $this->created_at,
