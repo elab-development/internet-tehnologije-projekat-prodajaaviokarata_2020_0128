@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import './Navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ user, setUser }) => {
+  let navigate = useNavigate();
   const handleLogout = async () => {
     const token = sessionStorage.getItem('token');
     try {
@@ -14,6 +15,7 @@ const Navbar = ({ user, setUser }) => {
       });
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('user');
+      navigate("/")
       setUser(null);
     } catch (error) {
       console.error('There was an error logging out:', error);
