@@ -3,7 +3,7 @@ import useFlights from './useFlights';
 import './Letovi.css';  
 import Flight from './Flight';  
 
-const Letovi = ({ user }) => {
+const Letovi = () => {
   const [flights] = useFlights();
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);

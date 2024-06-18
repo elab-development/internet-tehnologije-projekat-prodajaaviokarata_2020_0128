@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [name, setName] = useState('Test User');
     const [email, setEmail] = useState('testuser@example.com');
     const [password, setPassword] = useState('password');
+    let navigate= useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -16,7 +18,10 @@ const Register = () => {
       });
       
       console.log('Registration successful:', response.data);
+      alert("USPESNO!")
+      navigate("/login");
     } catch (error) {
+      alert("GRESKA!")
       console.error('There was an error registering:', error);
     }
   };

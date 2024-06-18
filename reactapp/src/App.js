@@ -10,7 +10,6 @@ import MojeKarte from './UlogovaniKorisnik/karte/MojeKarte';
 
 function App() {
   const [user, setUser] = useState(null);
-
   useEffect(() => {
     const storedUser = sessionStorage.getItem('user');
     if (storedUser) {
@@ -18,17 +17,18 @@ function App() {
     }
   }, []);
 
+
   return (
     <Router>
       <div className="App">
       <Navbar user={user} setUser={setUser} />
         <Routes>
           <Route path="/" element={<LandingPage user={user} />} />
-          <Route path="/mojeKarte" element={<MojeKarte user={user} />} />
+          <Route path="/mojeKarte" element={<MojeKarte  />} />
 
-          <Route path="/letovi" element={<Letovi user={user} />} />
+          <Route path="/letovi" element={<Letovi />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
-          <Route path="/register" element={<Register setUser={setUser} />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
     </Router>
