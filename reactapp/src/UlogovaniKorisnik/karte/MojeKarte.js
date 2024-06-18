@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useTickets from './useTickets';
 import './MojeKarte.css';
 import TicketRow from './TicketRow';  
 
 const MojeKarte = () => {
   const [tickets] = useTickets();
+  const [currentPage, setCurrentPage] = useState(1);
+  const ticketsPerPage = 5;
+
+  const indexOfLastTicket = currentPage * ticketsPerPage;
+  const indexOfFirstTicket = indexOfLastTicket - ticketsPerPage;
+  const currentTickets = tickets.slice(indexOfFirstTicket, indexOfLastTicket);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="moje-karte-container">
@@ -29,12 +37,19 @@ const MojeKarte = () => {
             </tr>
           </thead>
           <tbody>
-            {tickets.map(ticket => (
-              <TicketRow key={ticket.id} ticket={ticket} /> // Use the TicketRow component
+            {currentTickets.map(ticket => (
+              <TicketRow key={ticket.id} ticket={ticket} />
             ))}
           </tbody>
         </table>
       )}
+      <div className="pagination">
+        {[...Array(Math.ceil(tickets.length / ticketsPerPage)).keys()].map(number => (
+          <button key={number} onClick={() => paginate(number + 1)} className={`page-item ${currentPage === number + 1 ? 'active' : ''}`}>
+            {number + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
