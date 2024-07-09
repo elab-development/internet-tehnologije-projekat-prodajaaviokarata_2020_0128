@@ -7,11 +7,20 @@ const Letovi = () => {
   const [flights] = useFlights();
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [lockedFlights, setLockedFlights] = useState([]);
   const flightsPerPage = 5;
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
     setCurrentPage(1); // Resetujemo na prvu stranicu pri pretrazi
+  };
+
+  const lockFlight = (flightId) => {
+    setLockedFlights([...lockedFlights, flightId]);
+  };
+
+  const unlockFlight = (flightId) => {
+    setLockedFlights(lockedFlights.filter(id => id !== flightId));
   };
 
   const filteredFlights = flights.filter(flight => 
@@ -51,7 +60,13 @@ const Letovi = () => {
         </thead>
         <tbody>
           {currentFlights.map(flight => (
-            <Flight key={flight.id} flight={flight} />
+            <Flight 
+              key={flight.id} 
+              flight={flight} 
+              lockFlight={lockFlight}
+              unlockFlight={unlockFlight}
+              isLocked={lockedFlights.includes(flight.id)}
+            />
           ))}
         </tbody>
       </table>
