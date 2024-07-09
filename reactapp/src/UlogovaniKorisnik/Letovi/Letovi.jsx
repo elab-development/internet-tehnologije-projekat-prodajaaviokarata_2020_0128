@@ -9,6 +9,7 @@ const Letovi = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [lockedFlights, setLockedFlights] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [airports, setAirports] = useState([]);
   const [newFlight, setNewFlight] = useState({
     flight_number: '',
     departure_city: '',
@@ -20,6 +21,30 @@ const Letovi = () => {
     reserved_seats: ''
   });
   const flightsPerPage = 5;
+
+  useEffect(() => {
+    const fetchAirports = async () => {
+      const githubURL = 'https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat';
+      try {
+        const response = await fetch(githubURL);
+        const data = await response.text();
+        const airports = data.split('\n').map(line => line.split(','));
+        const airportOptions = airports.map(airport => ({
+          id: airport[0],
+          name: airport[1],
+          city: airport[2],
+          country: airport[3],
+          iata: airport[4],
+          icao: airport[5],
+        })).filter(airport => airport.city);
+        setAirports(airportOptions);
+      } catch (error) {
+        console.error('Error fetching airports data:', error);
+      }
+    };
+
+    fetchAirports();
+  }, []);
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
@@ -100,6 +125,11 @@ const Letovi = () => {
     }
   };
 
+  const handleNewFlightChange = (e) => {
+    const { name, value } = e.target;
+    setNewFlight({ ...newFlight, [name]: value });
+  };
+
   const filteredFlights = flights.filter(flight =>
     flight.flight_number.toLowerCase().includes(search.toLowerCase()) ||
     flight.departure_city.toLowerCase().includes(search.toLowerCase()) ||
@@ -128,14 +158,24 @@ const Letovi = () => {
       {showCreateForm && (
         <div className="create-flight">
           <h2>Create New Flight</h2>
-          <input type="text" placeholder="Flight Number" value={newFlight.flight_number} onChange={(e) => setNewFlight({ ...newFlight, flight_number: e.target.value })} />
-          <input type="text" placeholder="Departure City" value={newFlight.departure_city} onChange={(e) => setNewFlight({ ...newFlight, departure_city: e.target.value })} />
-          <input type="text" placeholder="Arrival City" value={newFlight.arrival_city} onChange={(e) => setNewFlight({ ...newFlight, arrival_city: e.target.value })} />
-          <input type="datetime-local" placeholder="Departure Time" value={newFlight.departure_time} onChange={(e) => setNewFlight({ ...newFlight, departure_time: e.target.value })} />
-          <input type="datetime-local" placeholder="Arrival Time" value={newFlight.arrival_time} onChange={(e) => setNewFlight({ ...newFlight, arrival_time: e.target.value })} />
-          <input type="number" placeholder="Price" value={newFlight.price} onChange={(e) => setNewFlight({ ...newFlight, price: e.target.value })} />
-          <input type="number" placeholder="Total Seats" value={newFlight.total_seats} onChange={(e) => setNewFlight({ ...newFlight, total_seats: e.target.value })} />
-          <input type="number" placeholder="Reserved Seats" value={newFlight.reserved_seats} onChange={(e) => setNewFlight({ ...newFlight, reserved_seats: e.target.value })} />
+          <input type="text" placeholder="Flight Number" name="flight_number" value={newFlight.flight_number} onChange={handleNewFlightChange} />
+          <select name="departure_city" value={newFlight.departure_city} onChange={handleNewFlightChange}>
+            <option value="">Select Departure City</option>
+            {airports.map(airport => (
+              <option key={airport.id} value={airport.city}>{airport.city} - {airport.name}</option>
+            ))}
+          </select>
+          <select name="arrival_city" value={newFlight.arrival_city} onChange={handleNewFlightChange}>
+            <option value="">Select Arrival City</option>
+            {airports.map(airport => (
+              <option key={airport.id} value={airport.city}>{airport.city} - {airport.name}</option>
+            ))}
+          </select>
+          <input type="datetime-local" placeholder="Departure Time" name="departure_time" value={newFlight.departure_time} onChange={handleNewFlightChange} />
+          <input type="datetime-local" placeholder="Arrival Time" name="arrival_time" value={newFlight.arrival_time} onChange={handleNewFlightChange} />
+          <input type="number" placeholder="Price" name="price" value={newFlight.price} onChange={handleNewFlightChange} />
+          <input type="number" placeholder="Total Seats" name="total_seats" value={newFlight.total_seats} onChange={handleNewFlightChange} />
+          <input type="number" placeholder="Reserved Seats" name="reserved_seats" value={newFlight.reserved_seats} onChange={handleNewFlightChange} />
           <button onClick={handleCreate}>Create Flight</button>
         </div>
       )}
