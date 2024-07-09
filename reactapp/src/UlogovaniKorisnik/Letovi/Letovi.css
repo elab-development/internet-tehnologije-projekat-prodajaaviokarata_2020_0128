@@ -1,75 +1,115 @@
 .letovi-container {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    max-width: 1200px;
-    margin: 40px auto;
-  }
-  
-  .letovi-title {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-    text-align: center;
-  }
-  
-  .letovi-search {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .letovi-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .letovi-table th,
-  .letovi-table td {
-    padding: 12px;
-    border: 1px solid #ccc;
-    text-align: left;
-  }
-  
-  .letovi-table th {
-    background-color: #03a4ed;
-    color: #fff;
-  }
-  
-  .letovi-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .letovi-table tr:hover {
-    background-color: #ddd;
-  }
-  
-  .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .page-item {
-    padding: 10px 15px;
-    margin: 0 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #fff;
-  }
-  
-  .page-item.active {
-    background-color: #03a4ed;
-    color: #fff;
-    border: 1px solid #03a4ed;
-  }
-  
-  .page-item:hover {
-    background-color: #ddd;
-  }
-  
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
+.letovi-title {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+}
+
+.letovi-search {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.toggle-create-flight {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: #03a4ed;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.toggle-create-flight:hover {
+  background-color: #0292c9;
+}
+
+.create-flight {
+  margin-bottom: 20px;
+}
+
+.create-flight input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.create-flight button {
+  padding: 10px 20px;
+  background-color: #03a4ed;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create-flight button:hover {
+  background-color: #0292c9;
+}
+
+.letovi-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.letovi-table th,
+.letovi-table td {
+  padding: 12px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.letovi-table th {
+  background-color: #03a4ed;
+  color: #fff;
+}
+
+.letovi-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.letovi-table tr:hover {
+  background-color: #ddd;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-item {
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.page-item.active {
+  background-color: #03a4ed;
+  color: #fff;
+  border: 1px solid #03a4ed;
+}
+
+.page-item:hover {
+  background-color: #ddd;
+}

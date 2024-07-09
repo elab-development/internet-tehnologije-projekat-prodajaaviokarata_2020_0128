@@ -24,8 +24,9 @@ class FlightResource extends JsonResource
             'price' => $this->price,
             'total_seats' => $this->total_seats,
             'reserved_seats' => $this->reserved_seats,
+            'version' => $this->version, 
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'updated_at' => $this->updated_at, 
         ];
     }
 }
