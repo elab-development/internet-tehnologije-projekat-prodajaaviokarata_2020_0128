@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Select from 'react-select';
 import useFlights from './useFlights';
 import './Letovi.css';
 import Flight from './Flight';
@@ -30,13 +31,9 @@ const Letovi = () => {
         const data = await response.text();
         const airports = data.split('\n').map(line => line.split(','));
         const airportOptions = airports.map(airport => ({
-          id: airport[0],
-          name: airport[1],
-          city: airport[2],
-          country: airport[3],
-          iata: airport[4],
-          icao: airport[5],
-        })).filter(airport => airport.city);
+          value: airport[2], // city
+          label: `${airport[2]} - ${airport[1]}` // city - airport name
+        })).filter(airport => airport.value);
         setAirports(airportOptions);
       } catch (error) {
         console.error('Error fetching airports data:', error);
@@ -130,6 +127,10 @@ const Letovi = () => {
     setNewFlight({ ...newFlight, [name]: value });
   };
 
+  const handleSelectChange = (selectedOption, actionMeta) => {
+    setNewFlight({ ...newFlight, [actionMeta.name]: selectedOption.value });
+  };
+
   const filteredFlights = flights.filter(flight =>
     flight.flight_number.toLowerCase().includes(search.toLowerCase()) ||
     flight.departure_city.toLowerCase().includes(search.toLowerCase()) ||
@@ -159,18 +160,20 @@ const Letovi = () => {
         <div className="create-flight">
           <h2>Create New Flight</h2>
           <input type="text" placeholder="Flight Number" name="flight_number" value={newFlight.flight_number} onChange={handleNewFlightChange} />
-          <select name="departure_city" value={newFlight.departure_city} onChange={handleNewFlightChange}>
-            <option value="">Select Departure City</option>
-            {airports.map(airport => (
-              <option key={airport.id} value={airport.city}>{airport.city} - {airport.name}</option>
-            ))}
-          </select>
-          <select name="arrival_city" value={newFlight.arrival_city} onChange={handleNewFlightChange}>
-            <option value="">Select Arrival City</option>
-            {airports.map(airport => (
-              <option key={airport.id} value={airport.city}>{airport.city} - {airport.name}</option>
-            ))}
-          </select>
+          <Select
+            name="departure_city"
+            value={airports.find(airport => airport.value === newFlight.departure_city)}
+            onChange={handleSelectChange}
+            options={airports}
+            placeholder="Select Departure City"
+          />
+          <Select
+            name="arrival_city"
+            value={airports.find(airport => airport.value === newFlight.arrival_city)}
+            onChange={handleSelectChange}
+            options={airports}
+            placeholder="Select Arrival City"
+          />
           <input type="datetime-local" placeholder="Departure Time" name="departure_time" value={newFlight.departure_time} onChange={handleNewFlightChange} />
           <input type="datetime-local" placeholder="Arrival Time" name="arrival_time" value={newFlight.arrival_time} onChange={handleNewFlightChange} />
           <input type="number" placeholder="Price" name="price" value={newFlight.price} onChange={handleNewFlightChange} />
