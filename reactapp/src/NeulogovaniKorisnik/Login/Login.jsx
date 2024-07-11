@@ -18,7 +18,11 @@ const Login = ({ setUser }) => {
       sessionStorage.setItem('token', access_token);
       sessionStorage.setItem('user', JSON.stringify(user));
       setUser(user);
-      navigate('/letovi')
+      if (user.role === 'admin') {
+        navigate('/letovi');
+      } else {
+        navigate('/mojeKarte');
+      }
       console.log('Login successful:', response.data);
     } catch (error) {
       console.error('There was an error logging in:', error);

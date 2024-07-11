@@ -13,6 +13,7 @@ import ReservationsStatistics from './UlogovaniKorisnik/Admin/ReservationsStatis
 
 function App() {
   const [user, setUser] = useState(null);
+
   useEffect(() => {
     const storedUser = sessionStorage.getItem('user');
     if (storedUser) {
@@ -20,20 +21,16 @@ function App() {
     }
   }, []);
 
-
   return (
     <Router>
       <div className="App">
-      <Navbar user={user} setUser={setUser} />
+        <Navbar user={user} setUser={setUser} />
         <Routes>
           <Route path="/" element={<LandingPage user={user} />} />
-          <Route path="/mojeKarte" element={<MojeKarte  />} />
-
-
+          <Route path="/mojeKarte" element={<MojeKarte />} />
           <Route path="/korisnik/letovi" element={<UserFlights />} />
           <Route path="/rezervacije" element={<Reservations />} />
           <Route path="/statistike" element={<ReservationsStatistics />} />
-
           <Route path="/letovi" element={<Letovi />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/register" element={<Register />} />

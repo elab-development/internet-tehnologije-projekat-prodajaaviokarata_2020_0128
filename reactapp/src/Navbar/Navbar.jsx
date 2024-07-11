@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ user, setUser }) => {
   let navigate = useNavigate();
+
   const handleLogout = async () => {
     const token = sessionStorage.getItem('token');
     try {
@@ -15,7 +16,7 @@ const Navbar = ({ user, setUser }) => {
       });
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('user');
-      navigate("/")
+      navigate("/");
       setUser(null);
     } catch (error) {
       console.error('There was an error logging out:', error);
@@ -24,27 +25,44 @@ const Navbar = ({ user, setUser }) => {
 
   return (
     <nav className="navbar">
-      <Link to="/" style={{color:"white"}} className="navbar-logo">BestFlights</Link>
+      <Link to="/" className="navbar-logo">BestFlights</Link>
       <ul className="navbar-links">
         {user ? (
-           <>
-            <li className="navbar-item">
-              <a className="navbar-link" href="/letovi">Letovi</a>
-            </li>
-            <li className="navbar-item">
-              <a className="navbar-link" href="/mojeKarte">Moje karte</a>
-            </li>
+          user.role === 'admin' ? (
+            <>
+              <li className="navbar-item">
+                <Link to="/letovi" className="navbar-link">Letovi</Link>
+              </li>
+              <li className="navbar-item">
+                <Link to="/rezervacije" className="navbar-link">Rezervacije</Link>
+              </li>
+              <li className="navbar-item">
+                <Link to="/statistike" className="navbar-link">Statistike</Link>
+              </li>
               <li className="navbar-item">
                 <button className="navbar-button" onClick={handleLogout}>Logout</button>
               </li>
-          </>
+            </>
+          ) : (
+            <>
+              <li className="navbar-item">
+                <Link to="/mojeKarte" className="navbar-link">Moje karte</Link>
+              </li>
+              <li className="navbar-item">
+                <Link to="/korisnik/letovi" className="navbar-link">Letovi</Link>
+              </li>
+              <li className="navbar-item">
+                <button className="navbar-button" onClick={handleLogout}>Logout</button>
+              </li>
+            </>
+          )
         ) : (
           <>
             <li className="navbar-item">
-              <a className="navbar-link" href="/login">Login</a>
+              <Link to="/login" className="navbar-link">Login</Link>
             </li>
             <li className="navbar-item">
-              <a className="navbar-link" href="/register">Register</a>
+              <Link to="/register" className="navbar-link">Register</Link>
             </li>
           </>
         )}
