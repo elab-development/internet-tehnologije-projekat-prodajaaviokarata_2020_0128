@@ -121,4 +121,37 @@ class ReservationController extends Controller
             return response()->json(['message' => 'Rejection failed', 'error' => $e->getMessage()], 500);
         }
     }
+
+    public function statistics()
+    {
+        // Broj rezervacija po letu
+        $reservationsByFlight = Reservation::select(DB::raw('flight_id, count(*) as total'))
+            ->groupBy('flight_id')
+            ->with('flight')
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [$item->flight->flight_number => $item->total];
+            });
+    
+        // Status rezervacija
+        $reservationStatuses = Reservation::select(DB::raw('status, count(*) as total'))
+            ->groupBy('status')
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [$item->status => $item->total];
+            });
+    
+        return response()->json([
+            'reservationsByFlight' => $reservationsByFlight,
+            'reservationStatuses' => $reservationStatuses
+        ]);
+    }
+    
+
+
+
+
+
+
+
 }

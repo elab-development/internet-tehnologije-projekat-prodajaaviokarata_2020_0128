@@ -31,7 +31,7 @@ Route::get('reservations', [ReservationController::class, 'index']);
 //RUTE ZA BILO KOG ULOGOVANOG (I ADMIN I KORISNIK)
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('user', [AuthController::class, 'user'])->middleware('auth:sanctum');
-
+ 
 
 // Rute za admina
 Route::middleware(['auth:sanctum'   ])->group(function () {
@@ -40,5 +40,8 @@ Route::middleware(['auth:sanctum'   ])->group(function () {
     //samo ulogovani obican korisnik moze da preuzme karte koje je kupio 
     Route::apiResource('tickets', TicketController::class);
     Route::get('tickets/{id}/download-pdf', [TicketController::class, 'downloadPdf']);
+
+    Route::get('statistics', [ReservationController::class, 'statistics']);
+
 });
  
