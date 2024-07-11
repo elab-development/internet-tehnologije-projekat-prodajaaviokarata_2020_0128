@@ -22,25 +22,22 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::get('flights', [FlightController::class, 'index']);
+Route::apiResource('seats', SeatController::class);
+Route::get('flights/{id}/seats', [SeatController::class, 'getSeatsByFlight']);
+
+
 
 //RUTE ZA BILO KOG ULOGOVANOG (I ADMIN I KORISNIK)
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('user', [AuthController::class, 'user'])->middleware('auth:sanctum');
- 
 
 
 // Rute za admina
-Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+Route::middleware(['auth:sanctum'   ])->group(function () {
     Route::apiResource('flights', FlightController::class)->except('index');
-    Route::apiResource('seats', SeatController::class);
-
-});
-
-// Rute za korisnika
-Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
+    Route::apiResource('reservations', ReservationController::class);
     //samo ulogovani obican korisnik moze da preuzme karte koje je kupio 
     Route::apiResource('tickets', TicketController::class);
     Route::get('tickets/{id}/download-pdf', [TicketController::class, 'downloadPdf']);
-    Route::apiResource('reservations', ReservationController::class);
-
 });
+ 

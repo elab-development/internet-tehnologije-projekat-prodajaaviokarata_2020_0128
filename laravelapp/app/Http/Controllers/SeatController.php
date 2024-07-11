@@ -14,7 +14,11 @@ class SeatController extends Controller
         $seats = Seat::all();
         return SeatResource::collection($seats);
     }
-
+    public function getSeatsByFlight($flightId)
+    {
+        $seats = Seat::where('flight_id', $flightId)->get();
+        return SeatResource::collection($seats);
+    }
     public function show($id)
     {
         $seat = Seat::findOrFail($id);

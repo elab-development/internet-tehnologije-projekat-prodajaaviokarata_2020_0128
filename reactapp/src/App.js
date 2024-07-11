@@ -7,6 +7,7 @@ import Register from './NeulogovaniKorisnik/Register/Register';
 import Navbar from './Navbar/Navbar';
 import Letovi from './UlogovaniKorisnik/Letovi/Letovi';
 import MojeKarte from './UlogovaniKorisnik/karte/MojeKarte';
+import UserFlights from './UlogovaniKorisnik/ObicanKorisnik/UserFlights';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -25,6 +26,9 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage user={user} />} />
           <Route path="/mojeKarte" element={<MojeKarte  />} />
+
+
+          <Route path="/korisnik/letovi" element={<UserFlights />} />
 
           <Route path="/letovi" element={<Letovi />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
