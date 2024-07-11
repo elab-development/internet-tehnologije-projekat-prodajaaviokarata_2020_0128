@@ -17,7 +17,7 @@ class ReservationController extends Controller
             'flight_id' => 'required|exists:flights,id',
             'status' => 'required|string|max:255',
             'seat_id' => 'required|exists:seats,id',
-            'number_of_tickets' => 'required|integer|min:1', // Izmenjeno ovde
+            
         ]);
 
         if ($validator->fails()) {
@@ -26,7 +26,7 @@ class ReservationController extends Controller
 
         $flightId = $request->flight_id;
         $seatId = $request->seat_id;
-        $numberOfTickets = $request->number_of_tickets;
+        $numberOfTickets = 1;
 
         DB::beginTransaction();
 

@@ -3,7 +3,6 @@ import './FlightForUser.css';
 import axios from 'axios';
 
 const FlightForUser = ({ flight }) => {
-  const [numberOfTickets, setNumberOfTickets] = useState(1);
   const [seatId, setSeatId] = useState(null);
   const [seats, setSeats] = useState([]);
   const [message, setMessage] = useState('');
@@ -38,7 +37,6 @@ const FlightForUser = ({ flight }) => {
           flight_id: flight.id,
           status: 'reserved',
           seat_id: seatId,
-          number_of_tickets: numberOfTickets
         })
       });
 
@@ -73,15 +71,10 @@ const FlightForUser = ({ flight }) => {
                 <option key={seat.id} value={seat.id}>{seat.seat_number}</option>
               ))}
             </select>
-            <input
-              type="number"
-              value={numberOfTickets}
-              onChange={(e) => setNumberOfTickets(e.target.value)}
-              min="1"
-            />
             <button onClick={handleReserve}>Confirm Reservation</button>
           </div>
         )}
+        {message && <p>{message}</p>}
       </td>
     </tr>
   );
