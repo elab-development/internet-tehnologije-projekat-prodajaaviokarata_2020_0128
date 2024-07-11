@@ -24,17 +24,29 @@ const Letovi = () => {
   const flightsPerPage = 5;
 
   useEffect(() => {
+    // Funkcija za preuzimanje podataka o aerodromima
     const fetchAirports = async () => {
       const githubURL = 'https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat';
+
       try {
-        const response = await fetch(githubURL);
-        const data = await response.text();
-        const airports = data.split('\n').map(line => line.split(','));
-        const airportOptions = airports.map(airport => ({
-          value: airport[2], // city
-          label: `${airport[2]} - ${airport[1]}` // city - airport name
-        })).filter(airport => airport.value);
-        setAirports(airportOptions);
+        // Proveravamo da li su podaci već sačuvani u lokalnoj memoriji
+        const cachedAirports = localStorage.getItem('airports');
+        if (cachedAirports) {
+          setAirports(JSON.parse(cachedAirports));
+        } else {
+          // Ako podaci nisu u lokalnoj memoriji, preuzimamo ih sa GitHub-a
+          const response = await fetch(githubURL);
+          const data = await response.text();
+          const airports = data.split('\n').map(line => line.split(','));
+          const airportOptions = airports.map(airport => ({
+            value: airport[2], // grad
+            label: `${airport[2]} - ${airport[1]}` // grad - naziv aerodroma
+          })).filter(airport => airport.value);
+
+          // Sačuvajemo preuzete podatke u lokalnu memoriju za buduću upotrebu
+          localStorage.setItem('airports', JSON.stringify(airportOptions));
+          setAirports(airportOptions);
+        }
       } catch (error) {
         console.error('Error fetching airports data:', error);
       }
