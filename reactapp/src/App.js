@@ -8,6 +8,7 @@ import Navbar from './Navbar/Navbar';
 import Letovi from './UlogovaniKorisnik/Letovi/Letovi';
 import MojeKarte from './UlogovaniKorisnik/karte/MojeKarte';
 import UserFlights from './UlogovaniKorisnik/ObicanKorisnik/UserFlights';
+import Reservations from './UlogovaniKorisnik/Admin/Reservations';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -29,6 +30,7 @@ function App() {
 
 
           <Route path="/korisnik/letovi" element={<UserFlights />} />
+          <Route path="/rezervacije" element={<Reservations />} />
 
           <Route path="/letovi" element={<Letovi />} />
           <Route path="/login" element={<Login setUser={setUser} />} />

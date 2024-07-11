@@ -24,9 +24,10 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('flights', [FlightController::class, 'index']);
 Route::apiResource('seats', SeatController::class);
 Route::get('flights/{id}/seats', [SeatController::class, 'getSeatsByFlight']);
+Route::post('reservations/{id}/approve', [ReservationController::class, 'approve']);
+Route::post('reservations/{id}/reject', [ReservationController::class, 'reject']);
 
-
-
+Route::get('reservations', [ReservationController::class, 'index']);
 //RUTE ZA BILO KOG ULOGOVANOG (I ADMIN I KORISNIK)
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('user', [AuthController::class, 'user'])->middleware('auth:sanctum');

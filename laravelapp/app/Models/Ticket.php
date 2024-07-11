@@ -8,7 +8,7 @@ class Ticket extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'reservation_id', 'seat_id', 'user_id', 'flight_id'
+        'reservation_id', 'seat_id', 'user_id', 'flight_id', 'seat_number', 'price'
     ];
 
     public function reservation()

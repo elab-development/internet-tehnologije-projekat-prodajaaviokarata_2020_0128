@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use App\Models\Seat;
 use App\Http\Resources\ReservationResource;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +12,16 @@ use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
+    public function index()
+    {
+        $reservations = Reservation::with('user', 'flight')->get();
+        return ReservationResource::collection($reservations);
+    }
+    
+
+
+
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -54,6 +65,60 @@ class ReservationController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['message' => 'Reservation failed', 'error' => $e->getMessage()], 500);
+        }
+    }
+    public function approve($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+
+        DB::beginTransaction();
+
+        try {
+            $reservation->status = 'confirmed';
+            $reservation->save();
+
+            $ticketData = [
+                'reservation_id' => $reservation->id,
+                'flight_id' => $reservation->flight_id,
+                'price' => random_int(50,1800),
+                'seat_number' =>"35",
+
+            ];
+  
+
+            Ticket::create($ticketData);
+
+            DB::commit();
+            return new ReservationResource($reservation);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Approval failed', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function reject($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+
+        DB::beginTransaction();
+
+        try {
+            if ($reservation->seat_id) {
+                $seat = Seat::where('id', $reservation->seat_id)->lockForUpdate()->first();
+                if ($seat) {
+                    $seat->is_locked = false;
+                    $seat->locked_at = null;
+                    $seat->save();
+                }
+            }
+    
+            $reservation->delete();
+    
+            DB::commit();
+            return response()->json(['message' => 'Reservation rejected and seat unlocked']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Rejection failed', 'error' => $e->getMessage()], 500);
         }
     }
 }
