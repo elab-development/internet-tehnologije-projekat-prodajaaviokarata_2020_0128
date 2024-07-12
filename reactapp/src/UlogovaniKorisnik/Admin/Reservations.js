@@ -4,11 +4,13 @@ import './Reservations.css';
 
 const Reservations = () => {
   const [reservations, setReservations] = useState([]);
+  const [filteredReservations, setFilteredReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
+  const perPage = 10;
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -17,11 +19,6 @@ const Reservations = () => {
         const response = await axios.get('http://127.0.0.1:8000/api/reservations', {
           headers: {
             Authorization: `Bearer ${token}`
-          },
-          params: {
-            search,
-            page: currentPage,
-            per_page: perPage,
           }
         });
         setReservations(response.data.data);
@@ -33,7 +30,17 @@ const Reservations = () => {
     };
 
     fetchReservations();
-  }, [search, currentPage]);
+  }, []);
+
+  useEffect(() => {
+    const filtered = reservations.filter(reservation =>
+      reservation.user.name.toLowerCase().includes(search.toLowerCase()) ||
+      reservation.flight.flight_number.toLowerCase().includes(search.toLowerCase()) ||
+      reservation.status.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredReservations(filtered);
+    setTotalPages(Math.ceil(filtered.length / perPage));
+  }, [search, reservations]);
 
   const handleApprove = async (id) => {
     try {
@@ -71,6 +78,10 @@ const Reservations = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
+  const indexOfLastReservation = currentPage * perPage;
+  const indexOfFirstReservation = indexOfLastReservation - perPage;
+  const currentReservations = filteredReservations.slice(indexOfFirstReservation, indexOfLastReservation);
+
   return (
     <div className="reservations-container">
       <h1 className="reservations-title">All Reservations</h1>
@@ -92,7 +103,7 @@ const Reservations = () => {
           </tr>
         </thead>
         <tbody>
-          {reservations.map(reservation => (
+          {currentReservations.map(reservation => (
             <tr key={reservation.id}>
               <td>{reservation.id}</td>
               <td>{reservation.user.name}</td>
@@ -107,7 +118,7 @@ const Reservations = () => {
         </tbody>
       </table>
       <div className="pagination">
-        {[...Array(Math.ceil(reservations.length / perPage)).keys()].map(number => (
+        {[...Array(totalPages).keys()].map(number => (
           <button
             key={number}
             onClick={() => setCurrentPage(number + 1)}

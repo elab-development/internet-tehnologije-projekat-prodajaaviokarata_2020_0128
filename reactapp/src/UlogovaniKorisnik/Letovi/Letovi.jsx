@@ -69,10 +69,12 @@ const Letovi = () => {
   };
 
   const handleCreate = async () => {
+    const token = sessionStorage.getItem('token');  
     try {
       const response = await fetch('http://127.0.0.1:8000/api/flights', {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${token}`,  
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(newFlight)
@@ -100,9 +102,14 @@ const Letovi = () => {
   };
 
   const handleDelete = async (id) => {
+    const token = sessionStorage.getItem('token');  
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/flights/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,  
+          'Content-Type': 'application/json'
+        }
       });
       if (response.ok) {
         setFlights(flights.filter(flight => flight.id !== id));
@@ -115,10 +122,12 @@ const Letovi = () => {
   };
 
   const handleEdit = async (updatedFlight) => {
+    const token = sessionStorage.getItem('token');  
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/flights/${updatedFlight.id}`, {
         method: 'PUT',
         headers: {
+          'Authorization': `Bearer ${token}`,  
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(updatedFlight)
