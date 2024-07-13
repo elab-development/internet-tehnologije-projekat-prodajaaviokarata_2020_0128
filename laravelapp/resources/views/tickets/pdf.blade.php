@@ -35,7 +35,7 @@
 </head>
 <body>
     <div class="header">
-        <img src="{{ public_path('images/logo.png') }}" class="logo" alt="Logo">
+        <img src="{{ public_path('images/plane.jpg') }}" class="logo" alt="Logo">
         <h2>Ticket Details</h2>
         <p>{{ \Carbon\Carbon::now()->toFormattedDateString() }}</p>
     </div>

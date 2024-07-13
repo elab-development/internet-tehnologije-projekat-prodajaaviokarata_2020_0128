@@ -26,9 +26,10 @@ const Flight = ({ flight, lockFlight, unlockFlight, isLocked, onDelete, onEdit }
           <td><input type="number" name="price" value={editedFlight.price} onChange={handleEditChange} /></td>
           <td><input type="number" name="total_seats" value={editedFlight.total_seats} onChange={handleEditChange} /></td>
           <td><input type="number" name="reserved_seats" value={editedFlight.reserved_seats} onChange={handleEditChange} /></td>
-          <td><input type="hidden" name="version" value={editedFlight.version} onChange={handleEditChange} /></td>
+          
           <td><button onClick={handleSave}>Save</button></td>
           <td><button onClick={() => setIsEditing(false)}>Cancel</button></td>
+          <td><input type="hidden" name="version" value={editedFlight.version} onChange={handleEditChange} /></td>
         </>
       ) : (
         <>

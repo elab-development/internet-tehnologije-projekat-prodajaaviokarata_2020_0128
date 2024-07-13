@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('flight_number')->unique();
             $table->string('departure_city');
             $table->string('arrival_city');
-            $table->timestamp('departure_time');
-            $table->timestamp('arrival_time');
+            $table->timestamp('departure_time')->nullable();
+            $table->timestamp('arrival_time')->nullable();
             $table->decimal('price', 8, 2);
             $table->integer('total_seats');
             $table->integer('reserved_seats');
