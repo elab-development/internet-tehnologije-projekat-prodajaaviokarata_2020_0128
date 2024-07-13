@@ -1,0 +1,59 @@
+.moje-karte-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 40px auto;
+    overflow-x: auto; /* Added to handle overflow */
+  }
+  
+  .moje-karte-title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .moje-karte-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .moje-karte-table th,
+  .moje-karte-table td {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: left;
+    vertical-align: middle; /* Ensures vertical alignment */
+  }
+  
+  .moje-karte-table th {
+    background-color: #03a4ed;
+    color: #fff;
+  }
+  
+  .moje-karte-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .moje-karte-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .moje-karte-table td button {
+    padding: 8px 12px;
+    margin: 0 auto;
+    display: block; /* Centers the button */
+    background-color: #03a4ed;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .moje-karte-table td button:hover {
+    background-color: #0288d1;
+  }
+  
