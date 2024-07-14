@@ -20,7 +20,6 @@ class TicketFactory extends Factory
     {
         return [
             'reservation_id' => Reservation::factory(),
-            'flight_id' => Flight::factory(),
             'seat_number' => $this->faker->unique()->randomNumber(),
             'price' => $this->faker->randomFloat(2, 50, 500),
         ];

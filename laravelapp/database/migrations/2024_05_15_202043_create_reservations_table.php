@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('flight_id')->constrained()->onDelete('cascade');
             $table->string('status');
             $table->timestamps();
+            $table->foreignId('seat_id')->constrained()->onDelete('cascade');
         });
     }
 

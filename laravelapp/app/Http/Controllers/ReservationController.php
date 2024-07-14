@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservation;
 use App\Models\Seat;
+use App\Models\Flight;
 use App\Http\Resources\ReservationResource;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -56,9 +57,12 @@ class ReservationController extends Controller
                 'user_id' => Auth::id(),
                 'flight_id' => $flightId,
                 'status' => $request->status,
+                'seat_id' => $request->seat_id,
             ]);
 
-          
+            $flight = Flight::findOrFail($flightId);
+            $flight->reserved_seats = $flight->reserved_seats + 1;
+            $flight->save(); 
 
             DB::commit();
             return new ReservationResource($reservation);
@@ -76,12 +80,15 @@ class ReservationController extends Controller
         try {
             $reservation->status = 'confirmed';
             $reservation->save();
+            $flight = $reservation->flight;
+            $flightPrice = $flight->price;
+            $seat=$reservation->seat;
 
             $ticketData = [
                 'reservation_id' => $reservation->id,
                 'flight_id' => $reservation->flight_id,
-                'price' => random_int(50,1800),
-                'seat_number' =>"35",
+                'price' =>   $flightPrice,
+                'seat_number' =>$seat->seat_number,
 
             ];
   
@@ -103,16 +110,19 @@ class ReservationController extends Controller
         DB::beginTransaction();
 
         try {
-            if ($reservation->seat_id) {
-                $seat = Seat::where('id', $reservation->seat_id)->lockForUpdate()->first();
+            $seat= $reservation->seat;
+            
                 if ($seat) {
                     $seat->is_locked = false;
                     $seat->locked_at = null;
                     $seat->save();
                 }
-            }
-    
+        
             $reservation->delete();
+
+            $flight = Flight::findOrFail($reservation->flight_id);
+            $flight->reserved_seats = $flight->reserved_seats - 1;
+            $flight->save(); 
     
             DB::commit();
             return response()->json(['message' => 'Reservation rejected and seat unlocked']);

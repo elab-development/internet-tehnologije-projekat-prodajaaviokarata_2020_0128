@@ -24,7 +24,9 @@ const Login = ({ setUser }) => {
         navigate('/mojeKarte');
       }
       console.log('Login successful:', response.data);
+
     } catch (error) {
+      alert("Login failed. Check your email and password and try again")
       console.error('There was an error logging in:', error);
     }
   };

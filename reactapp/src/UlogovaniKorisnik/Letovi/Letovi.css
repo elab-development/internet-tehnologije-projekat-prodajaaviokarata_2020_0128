@@ -102,6 +102,7 @@
   border-radius: 5px;
   cursor: pointer;
   background-color: #fff;
+  color:#03a4ed;
 }
 
 .page-item.active {

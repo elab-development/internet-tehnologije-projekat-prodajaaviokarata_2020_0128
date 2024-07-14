@@ -16,7 +16,9 @@ const FlightForUser = ({ flight }) => {
       });
   
       if (response.status === 200) {
-        setSeats(response.data.data);
+        const all=response.data.data;
+        const unlocked = all.filter(all => all.is_locked==0);
+        setSeats(unlocked);
       } else {
         console.error('Failed to fetch seats:', response.data);
       }
@@ -35,7 +37,7 @@ const FlightForUser = ({ flight }) => {
         },
         body: JSON.stringify({
           flight_id: flight.id,
-          status: 'reserved',
+          status: 'pending',
           seat_id: seatId,
         })
       });
@@ -43,6 +45,7 @@ const FlightForUser = ({ flight }) => {
       const data = await response.json();
       if (response.ok) {
         setMessage('Reservation successful!');
+        setSeats([]);
       } else {
         setMessage('Reservation failed. Please try again.');
         console.error(data);

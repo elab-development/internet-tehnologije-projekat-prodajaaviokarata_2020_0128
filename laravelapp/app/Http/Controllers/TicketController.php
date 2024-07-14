@@ -12,7 +12,7 @@ class TicketController extends Controller
 {
     public function index()
     {
-       // Dohvati karte koje pripadaju ulogovanom korisniku
+       // karte koje pripadaju ulogovanom korisniku
        $tickets = Ticket::whereHas('reservation', function($query) {
             $query->where('user_id', Auth::id());
         })->get();
@@ -72,7 +72,7 @@ class TicketController extends Controller
     public function downloadPdf($id)
     {
         // Pronađi kartu sa svim potrebnim relacijama
-        $ticket = Ticket::with('reservation.user', 'flight')->findOrFail($id);
+        $ticket = Ticket::with('reservation.user', 'reservation.flight')->findOrFail($id);
 
         // Proveri da li je ulogovani korisnik isti kao korisnik povezan sa rezervacijom
         if (Auth::id() !== $ticket->reservation->user_id) {

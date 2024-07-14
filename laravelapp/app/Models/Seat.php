@@ -21,4 +21,9 @@ class Seat extends Model
     {
         return $this->belongsTo(Flight::class);
     }
+
+    public function reservation()
+    {
+        return $this->belongsTo(Reservation::class);
+    }
 }

@@ -42,12 +42,12 @@
 
     <div class="ticket-details">
         <p><strong>Passenger Name:</strong> {{ $ticket->reservation->user->name }}</p>
-        <p><strong>Flight Number:</strong> {{ $ticket->flight->flight_number }}</p>
-        <p><strong>Departure City:</strong> {{ $ticket->flight->departure_city }}</p>
-        <p><strong>Arrival City:</strong> {{ $ticket->flight->arrival_city }}</p>
-        <p><strong>Departure Time:</strong> {{ $ticket->flight->departure_time }}</p>
-        <p><strong>Arrival Time:</strong> {{ $ticket->flight->arrival_time }}</p>
-        <p><strong>Seat Number:</strong> {{ $ticket->seat_number }}</p>
+        <p><strong>Flight Number:</strong> {{ $ticket->reservation->flight->flight_number }}</p>
+        <p><strong>Departure City:</strong> {{ $ticket->reservation->flight->departure_city }}</p>
+        <p><strong>Arrival City:</strong> {{ $ticket->reservation->flight->arrival_city }}</p>
+        <p><strong>Departure Time:</strong> {{ $ticket->reservation->flight->departure_time }}</p>
+        <p><strong>Arrival Time:</strong> {{ $ticket->reservation->flight->arrival_time }}</p>
+        <p><strong>Seat Number:</strong> {{ $ticket->reservation->seat->seat_number }}</p>
         <p><strong>Price:</strong> ${{ $ticket->price }}</p>
     </div>
 

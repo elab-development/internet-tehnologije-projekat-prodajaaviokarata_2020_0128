@@ -13,8 +13,8 @@ class Flight extends Model
     ];
     
 
-    /*Ova metoda se koristi za implementaciju optimističkog zaključavanja prilikom ažuriranja modela Flight. 
-    Optimističko zaključavanje je tehnika koja se koristi da se izbegnu kolizije prilikom konkurentnih ažuriranja resursa, 
+    /*Implementacija optimistickog zakljucavanja prilikom azuriranja modela letova 
+    Optimisticko zakljucavanje je tehnika koja se koristi da se izbegnu kolizije prilikom konkurentnih ažuriranja resursa, 
     bez eksplicitnog zaključavanja. */
     
     protected function performUpdate(\Illuminate\Database\Eloquent\Builder $query)
@@ -30,10 +30,6 @@ class Flight extends Model
         return $this->hasMany(Reservation::class);
     }
 
-    public function tickets()
-    {
-        return $this->hasMany(Ticket::class);
-    }
 
     public function seats()
     {

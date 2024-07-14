@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Flight;
 use App\Models\Reservation;
 use App\Models\User;
+use App\Models\Seat;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -19,13 +20,22 @@ class ReservationSeeder extends Seeder
     {
         $flights = Flight::all();
         $users = User::all();
+        $seats = Seat::all();
+
 
         foreach ($flights as $flight) {
-            // Kreiramo između 5 i 15 rezervacija po letu
-            Reservation::factory(rand(5, 15))->create([
-                'flight_id' => $flight->id,
-                'user_id' => $users->random()->id,
-            ]);
+            $seats1 = Seat::where('flight_id', $flight->id)->get();
+            
+            for($i=0;$i<=rand(5,15);$i++)
+            {
+
+                Reservation::factory()->create([
+                    'flight_id' => $flight->id,
+                    'user_id' => $users->random()->id,
+                    'seat_id' => $seats1->random()->id,
+                ]);
+            }
+          
         }
     }
 }

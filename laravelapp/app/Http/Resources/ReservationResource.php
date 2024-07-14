@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Flight;
+use App\Models\Seat;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ReservationResource extends JsonResource
@@ -22,6 +23,7 @@ class ReservationResource extends JsonResource
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'seat' => new SeatResource(Seat::find($this->seat_id)),
         ];
     }
 }

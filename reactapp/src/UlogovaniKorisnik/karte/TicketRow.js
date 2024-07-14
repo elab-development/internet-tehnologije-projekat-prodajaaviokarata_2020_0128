@@ -26,15 +26,15 @@ const TicketRow = ({ ticket }) => {
   return (
     <tr>
       <td>{ticket.id}</td>
-      <td>{ticket.flight.flight_number}</td>
-      <td>{ticket.flight.departure_city}</td>
-      <td>{ticket.flight.arrival_city}</td>
-      <td>{ticket.flight.departure_time}</td>
-      <td>{ticket.flight.arrival_time}</td>
+      <td>{ticket.reservation.flight.flight_number}</td>
+      <td>{ticket.reservation.flight.departure_city}</td>
+      <td>{ticket.reservation.flight.arrival_city}</td>
+      <td>{ticket.reservation.flight.departure_time}</td>
+      <td>{ticket.reservation.flight.arrival_time}</td>
       <td>{ticket.seat_number}</td>
       <td>{ticket.price}</td>
       <td>{ticket.reservation.status}</td>
-      <td>{ticket.created_at}</td>
+      <td>{new Date(ticket.created_at).toLocaleDateString()+" \n"+new Date(ticket.created_at).toLocaleTimeString()}</td>
       <td>
         <button onClick={() => downloadPdf(ticket.id)}><FaDownload /></button>
       </td>

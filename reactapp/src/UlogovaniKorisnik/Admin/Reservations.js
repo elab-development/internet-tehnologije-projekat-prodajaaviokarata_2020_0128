@@ -21,7 +21,9 @@ const Reservations = () => {
             Authorization: `Bearer ${token}`
           }
         });
-        setReservations(response.data.data);
+        const all=response.data.data;
+        const pending = all.filter(all => all.status=='pending');
+        setReservations(pending);
         setLoading(false);
       } catch (err) {
         setError('An error occurred. Please try again later.');

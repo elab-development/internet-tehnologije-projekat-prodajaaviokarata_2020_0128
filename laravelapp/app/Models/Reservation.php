@@ -9,7 +9,7 @@ class Reservation extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id', 'flight_id', 'status'
+        'user_id', 'flight_id', 'status','seat_id'
     ];
 
     public function user()
@@ -26,4 +26,10 @@ class Reservation extends Model
     {
         return $this->hasMany(Ticket::class);
     }
+
+    public function seat()
+    {
+        return $this->belongsTo(Seat::class);
+    }
+    
 }

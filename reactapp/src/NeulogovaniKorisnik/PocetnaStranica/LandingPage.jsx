@@ -2,6 +2,7 @@ import React from 'react';
 import './vendor/bootstrap/css/bootstrap.min.css';
 import './assets/css/animated.css';
 import './assets/css/fontawesome.css'; 
+import { Link, useNavigate } from 'react-router-dom';
 
 import './assets/css/templatemo-space-dynamic.css';
 import { FaPlane, FaChartLine, FaGlobe, FaEnvelope, FaPhone, FaCalendarAlt, FaUser, FaUsers, FaFolder, FaPlaneDeparture, FaPlaneArrival } from 'react-icons/fa';
@@ -20,12 +21,7 @@ const LandingPage = () => {
                     <h2>We Offer <em>Best Flights</em> &amp; <span>Travel Packages</span></h2>
                     <p>Flight Deals is a professional platform providing the best deals on flights and travel packages. This template is provided by <a rel="nofollow" href="https://templatemo.com/page/1" target="_parent">TemplateMo</a>.</p>
                     <form id="search" action="#" method="GET">
-                      <fieldset>
-                        <input type="text" name="address" className="email" placeholder="Your destination..." autoComplete="on" required />
-                      </fieldset>
-                      <fieldset>
-                        <button type="submit" className="main-button">Find Flights</button>
-                      </fieldset>
+                    
                     </form>
                   </div>
                 </div>  

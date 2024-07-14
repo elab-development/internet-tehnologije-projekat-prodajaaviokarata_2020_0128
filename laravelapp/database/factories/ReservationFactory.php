@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Flight;
 use App\Models\User;
+use App\Models\Seat;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,6 +23,7 @@ class ReservationFactory extends Factory
             'user_id' => User::factory(),
             'flight_id' => Flight::factory(),
             'status' => $this->faker->randomElement(['confirmed', 'pending', 'cancelled']),
+            'seat_id' => Seat::factory(),
         ];
     }
 }
