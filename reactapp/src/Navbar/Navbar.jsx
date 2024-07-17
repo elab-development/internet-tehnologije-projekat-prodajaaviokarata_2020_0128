@@ -23,36 +23,54 @@ const Navbar = ({ user, setUser }) => {
     }
   };
 
-  return (
+  return (<>
+   <div>
+    {user ? (
+          user.role === 'admin' ? (
+            <>
+              <p className="ime"> <span className="tekst">Admin: {user.name}</span></p>
+            </>
+          ) : (
+            <>
+                <p className="ime"> <span className="tekst"> User: {user.name}</span></p>
+            </>
+          )
+        ) : (
+          <>
+            
+          </>
+        )}
+    </div>
     <nav className="navbar">
+    
       <Link to="/" className="navbar-logo">BestFlights</Link>
       <ul className="navbar-links">
         {user ? (
           user.role === 'admin' ? (
             <>
               <li className="navbar-item">
-                <Link to="/letovi" className="navbar-link">Letovi</Link>
+                <Link to="/letovi" className="navbar-link">Flights</Link>
               </li>
               <li className="navbar-item">
-                <Link to="/rezervacije" className="navbar-link">Rezervacije</Link>
+                <Link to="/rezervacije" className="navbar-link">Reservations</Link>
               </li>
               <li className="navbar-item">
-                <Link to="/statistike" className="navbar-link">Statistike</Link>
+                <Link to="/statistike" className="navbar-link">Statistics</Link>
               </li>
               <li className="navbar-item">
-                <button className="navbar-button" onClick={handleLogout}>Logout</button>
+              <Link className="navbar-button" onClick={handleLogout}>Logout</Link>
               </li>
             </>
           ) : (
             <>
               <li className="navbar-item">
-                <Link to="/mojeKarte" className="navbar-link">Moje karte</Link>
+                <Link to="/mojeKarte" className="navbar-link">My tickets</Link>
               </li>
               <li className="navbar-item">
-                <Link to="/korisnik/letovi" className="navbar-link">Letovi</Link>
+                <Link to="/korisnik/letovi" className="navbar-link">Flights</Link>
               </li>
               <li className="navbar-item">
-                <button className="navbar-button" onClick={handleLogout}>Logout</button>
+              <Link className="navbar-button" onClick={handleLogout}>Logout</Link>
               </li>
             </>
           )
@@ -68,6 +86,9 @@ const Navbar = ({ user, setUser }) => {
         )}
       </ul>
     </nav>
+
+   
+    </>
   );
 };
 

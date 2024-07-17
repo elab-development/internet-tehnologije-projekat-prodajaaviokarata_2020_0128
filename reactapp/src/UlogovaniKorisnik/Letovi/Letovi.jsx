@@ -8,7 +8,6 @@ const Letovi = () => {
   const [flights, setFlights] = useFlights();
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [lockedFlights, setLockedFlights] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [airports, setAirports] = useState([]);
   const [newFlight, setNewFlight] = useState({
@@ -60,13 +59,7 @@ const Letovi = () => {
     setCurrentPage(1); // Resetujemo na prvu stranicu pri pretrazi
   };
 
-  const lockFlight = (flightId) => {
-    setLockedFlights([...lockedFlights, flightId]);
-  };
 
-  const unlockFlight = (flightId) => {
-    setLockedFlights(lockedFlights.filter(id => id !== flightId));
-  };
 
   const handleCreate = async () => {
     const token = sessionStorage.getItem('token');  
@@ -134,6 +127,7 @@ const Letovi = () => {
       });
       const data = await response.json();
       if (response.ok) {
+        updatedFlight.version=updatedFlight.version+1;
         setFlights(flights.map(flight => (flight.id === updatedFlight.id ? data.data : flight)));
       } else {
         console.error(data);
@@ -223,9 +217,6 @@ const Letovi = () => {
             <Flight
               key={flight.id}
               flight={flight}
-              lockFlight={lockFlight}
-              unlockFlight={unlockFlight}
-              isLocked={lockedFlights.includes(flight.id)}
               onDelete={handleDelete}
               onEdit={handleEdit}
             />

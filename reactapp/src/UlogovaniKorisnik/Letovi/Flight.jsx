@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Flight = ({ flight, lockFlight, unlockFlight, isLocked, onDelete, onEdit }) => {
+const Flight = ({ flight, onDelete, onEdit }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedFlight, setEditedFlight] = useState({ ...flight });
 
@@ -15,7 +15,7 @@ const Flight = ({ flight, lockFlight, unlockFlight, isLocked, onDelete, onEdit }
   };
 
   return (
-    <tr className={isLocked ? 'locked' : ''}>
+    <tr>
       {isEditing ? (
         <>
           <td><input type="text" name="flight_number" value={editedFlight.flight_number} onChange={handleEditChange} /></td>
@@ -26,7 +26,6 @@ const Flight = ({ flight, lockFlight, unlockFlight, isLocked, onDelete, onEdit }
           <td><input type="number" name="price" value={editedFlight.price} onChange={handleEditChange} /></td>
           <td><input type="number" name="total_seats" value={editedFlight.total_seats} onChange={handleEditChange} /></td>
           <td><input type="number" name="reserved_seats" value={editedFlight.reserved_seats} onChange={handleEditChange} /></td>
-          
           <td><button onClick={handleSave}>Save</button></td>
           <td><button onClick={() => setIsEditing(false)}>Cancel</button></td>
           <td><input type="hidden" name="version" value={editedFlight.version} onChange={handleEditChange} /></td>
