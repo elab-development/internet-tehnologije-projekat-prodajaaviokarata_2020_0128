@@ -1,0 +1,88 @@
+.user-flights-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 40px auto;
+  }
+  
+  .user-flights-title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .user-flights-search {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .user-flights-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .user-flights-table th,
+  .user-flights-table td {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+  
+  .user-flights-table th {
+    background-color: #03a4ed;
+    color: #fff;
+  }
+  
+  .user-flights-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .user-flights-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .page-item {
+    padding: 10px 15px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #fff;
+  }
+  
+  .page-item.active {
+    background-color: #03a4ed;
+    color: #fff;
+    border: 1px solid #03a4ed;
+  }
+  
+  .page-item:hover {
+    background-color: #ddd;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #03a4ed;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0292c9;
+  }
+  
